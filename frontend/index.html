@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>The Guardian Ledger | AI-Powered Banking Security</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/frontend/js/script.js" defer></script>
+    <link rel="stylesheet" href="/frontend/css/style.css">
+</head>
+<body class="bg-surface text-on-background font-body">
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#f6fafe] shadow-sm">
+        <nav class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+            <span class="text-xl font-extrabold text-[#003461] tracking-tighter font-headline cursor-pointer" onclick="location.href='/'">The Guardian Ledger</span>
+            <div class="flex items-center gap-4">
+                <a href="/login" class="font-bold text-sm text-primary">Login</a>
+                <a href="/register" class="vault-gradient text-white px-6 py-2 rounded-lg font-bold text-sm">Join</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="pt-20">
+        <section class="relative min-h-[80vh] flex flex-col justify-center px-8 md:px-16 lg:px-24">
+            <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-xs font-bold mb-6">
+                        <span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                        SECURED BY AI-LEGER V4.0
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold font-headline text-primary tracking-tighter leading-tight mb-6">
+                        Banking Security <br/>Powered by AI.
+                    </h1>
+                    <p class="text-lg text-on-surface-variant max-w-xl mb-10 leading-relaxed">
+                        The Guardian Ledger provides a monolithic defense for your assets. Our neural engines analyze millions of patterns in milliseconds.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="/login" class="vault-gradient text-white px-8 py-4 rounded-lg font-bold text-base shadow-lg transition-transform hover:scale-105 active:scale-95">Login to Vault</a>
+                        <a href="/register" class="border-2 border-outline-variant text-primary px-8 py-4 rounded-lg font-bold text-base hover:bg-surface-container-low transition-colors">Register</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

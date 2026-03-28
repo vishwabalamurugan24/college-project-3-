@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Profile | The Guardian Ledger</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="/frontend/js/script.js" defer></script>
+    <link rel="stylesheet" href="/frontend/css/style.css">
+</head>
+<body class="bg-surface text-on-background font-body">
+    <header class="fixed top-0 left-0 w-full z-50 bg-[#f6fafe] shadow-sm">
+        <nav class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
+            <span class="text-xl font-extrabold text-[#003461] tracking-tighter font-headline cursor-pointer" onclick="location.href='/'">The Guardian Ledger</span>
+            <div class="hidden md:flex gap-6 items-center">
+                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/dashboard">Dashboard</a>
+                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/history">History</a>
+                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/transaction">Transfer</a>
+                <a class="font-['Manrope'] font-bold text-sm text-[#003461] border-b-2 border-[#003461]" href="/profile">Profile</a>
+            </div>
+            <button class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" onclick="logout()">Logout</button>
+        </nav>
+    </header>
+
+    <main class="pt-24 px-8 max-w-7xl mx-auto space-y-8 pb-12">
+        <div class="bg-white rounded-2xl shadow-sm border border-outline-variant/10 p-8 flex items-center justify-between">
+            <div class="flex items-center gap-6">
+                <div class="w-24 h-24 rounded-full bg-primary-fixed/30 p-1">
+                    <img class="w-full h-full rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnSChPlOAOieFqQqJYihjxPCe7p99SsRZ3ScMqHPmn7gz2107kUvfAYr1Js1_W_lMTXKnk3Aya7_BguEjGImlFtiF1EHcbbbjmVdREBBIBetAdW7R4mUxSWvAWGyhmpZ2S6bbGAH4OoUIGcbsP3NoXbKEAZmww5couZ2n7qZxww5-3Ky-jn8NsTbjDiHatar17UQLzVWCU47AmP6mBYieERkiieHi-_83XVf77qbU9ITjTvQ1libeuhwrLR4hY6woACLQYVwZYLq8" alt="Profile avatar">
+                </div>
+                <div>
+                    <h1 class="text-3xl font-extrabold text-primary" id="profile-name">User</h1>
+                    <p class="text-sm text-secondary font-bold mt-1">Legger Active Member</p>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
