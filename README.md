@@ -1,51 +1,58 @@
-# Net Banking Fraud Detection using Machine Learning
+# The Guardian Ledger
 
-A premium, intelligent web-based system designed to enhance the security of online banking transactions using real-time Machine Learning analysis.
+**AI-Powered Banking Security & Fraud Intervention System**
 
-## 🚀 Features
-- **Real-time Fraud Detection**: Every transaction is analyzed by a Random Forest model.
-- **Machine Learning Integration**: Uses historical transaction patterns to identify anomalies.
-- **Premium Glassmorphism UI**: A stunning, modern interface with interactive elements and micro-animations.
-- **Admin Dashboard**: Comprehensive monitoring for fraudulent activities and system statistics.
-- **Secure Authentication**: User and Admin login modules.
+The Guardian Ledger is a premium, intelligent web-based platform designed to protect financial assets through real-time Machine Learning analysis. It features a modern, high-conversion interface and a proactive "AI Guard" that intercepts fraudulent transactions before they are finalized.
+
+## 🚀 Key Features
+- **Neural Fraud Detection**: Every transaction is audited by a Random Forest ML engine in milliseconds.
+- **Proactive Intervention**: High-risk transactions trigger a specialized "Security Halt" modal for manual review.
+- **Guardian Dashboard**: A stunning user hub with glassmorphic cards, balance audits, and transaction history.
+- **Administrative Suite**: A full-featured admin portal with system metrics, threat distribution charts (via Chart.js), and a real-time flagged ledger.
+- **Multi-Page Architecture**: Rebuilt from a monolithic SPA to a robust, scalable Flask-based multi-page application.
 
 ## 🛠️ Technology Stack
-- **Frontend**: HTML5, Vanilla CSS3 (Glassmorphism), JavaScript (SPA).
-- **Backend**: Flask (Python framework), SQLite (Database).
-- **ML Engine**: Scikit-learn, Pandas, Joblib.
+- **Frontend**: HTML5, Vanilla JavaScript, Tailwind CSS (Modern Security Theme).
+- **Backend**: Flask (Python), Blueprint-based modular routing.
+- **Database**: SQLite with SQLAlchemy ORM.
+- **ML Engine**: Scikit-learn (Random Forest Classifier), Pandas.
+- **Visuals**: Chart.js for admin analytics, Material Symbols for modern iconography.
 
-## 📦 Installation & Setup
+## 📦 Quick Start
 
-### 1. Prerequisite
+### 1. Prerequisites
 Ensure you have Python 3.8+ installed.
 
-### 2. Install Dependencies
+### 2. Setup Environment
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Train the Machine Learning Model
-Since this is a simulation, you first need to generate the synthetic data and train the model.
+### 3. Initialize ML Brain
+Generate the synthetic training data and calibrate the neural model:
 ```bash
 python ml/train_model.py
 ```
-This will create `data/fraud_model.joblib` which the backend uses for predictions.
+This generates `data/fraud_model.joblib` which the AI Guard uses for real-time auditing.
 
-### 4. Run the Application
+### 4. Deploy Locally
+Launch the secure environment:
 ```bash
-cd backend
-python app.py
+python start_website.py
 ```
-Visit `http://127.0.0.1:5000` in your browser.
+Visit `http://127.0.0.1:5000` to access the vault.
 
-## 🔑 Default Credentials
-- **Admin**: `admin` / `admin123`
-- **User**: Register a new account via the UI.
+## 🔑 Access Credentials
+- **Authorized Admin**: `admin` / `admin123`
+- **User Node**: Register a new account directly via the landing page.
 
-## 🧠 ML Features Explained
-The system analyzes the following parameters for each transaction:
-1. **Amount**: Detects unusually high transactions.
-2. **Time of Day**: Monitors for suspicious night-time activities.
-3. **Day of Week**: Learns spending patterns based on the day.
-4. **Device Consistency**: Flags transactions from unrecognized devices.
-5. **Location Consistency**: Flags transactions from unusual geographic locations.
+## 🧠 Auditing Parameters
+The AI Guard analyzes five critical vectors for every transaction:
+1. **Node Volume**: Detects unusually high transaction amounts.
+2. **Temporal Window**: Audits for suspicious night-time or off-peak activity.
+3. **Weekly Cadence**: Learns specific user spending patterns based on the day.
+4. **Device Integrity**: Identifies transactions from unrecognized hardware signatures.
+5. **Geographic Consistency**: Labels transactions from anomalous geographic locations.
+
+---
+*Secured by The Guardian Ledger Neural Engine v4.0*

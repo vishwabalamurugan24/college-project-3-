@@ -1,55 +1,131 @@
 <!DOCTYPE html>
-<html class="light" lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>History | The Guardian Ledger</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
-    <!-- Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="/frontend/js/script.js" defer></script>
-    <link rel="stylesheet" href="/frontend/css/style.css">
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Transaction History - The Guardian Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="/js/script.js" defer></script>
+<link rel="stylesheet" href="/style.css">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ffdad6",
+              "secondary-container": "#82f5c1",
+              "on-secondary-fixed-variant": "#005137",
+              "on-tertiary": "#ffffff",
+              "inverse-primary": "#a3c9ff",
+              "surface": "#f6fafe",
+              "secondary": "#006c4a",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary-container": "#ffa096",
+              "primary-fixed": "#d3e4ff",
+              "error-container": "#ffdad6",
+              "surface-bright": "#f6fafe",
+              "on-background": "#171c1f",
+              "on-secondary-container": "#00714e",
+              "on-secondary-fixed": "#002114",
+              "error": "#ba1a1a",
+              "surface-variant": "#dfe3e7",
+              "surface-dim": "#d6dade",
+              "on-tertiary-fixed": "#410002",
+              "tertiary-fixed-dim": "#ffb4ab",
+              "outline": "#727781",
+              "primary": "#003461",
+              "on-surface": "#171c1f",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dfe3e7",
+              "secondary-fixed-dim": "#68dba9",
+              "primary-container": "#004b87",
+              "on-surface-variant": "#424750",
+              "on-primary-fixed-variant": "#004882",
+              "outline-variant": "#c2c6d1",
+              "primary-fixed-dim": "#a3c9ff",
+              "inverse-surface": "#2c3134",
+              "on-primary-container": "#8abcff",
+              "on-primary": "#ffffff",
+              "surface-tint": "#27609d",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#6e0006",
+              "tertiary-container": "#99000c",
+              "surface-container": "#eaeef2",
+              "surface-container-low": "#f0f4f8",
+              "on-tertiary-fixed-variant": "#93000b",
+              "background": "#f6fafe",
+              "on-error-container": "#93000a",
+              "on-primary-fixed": "#001c38",
+              "secondary-fixed": "#85f8c4",
+              "inverse-on-surface": "#edf1f5",
+              "on-secondary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
 </head>
-<body class="bg-surface text-on-background font-body">
-    <header class="fixed top-0 left-0 w-full z-50 bg-[#f6fafe] shadow-sm">
-        <nav class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
-            <span class="text-xl font-extrabold text-[#003461] tracking-tighter font-headline cursor-pointer" onclick="location.href='/'">The Guardian Ledger</span>
-            <div class="hidden md:flex gap-6 items-center">
-                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/dashboard">Dashboard</a>
-                <a class="font-['Manrope'] font-bold text-sm text-[#003461] border-b-2 border-[#003461]" href="/history">History</a>
-                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/transaction">Transfer</a>
-                <a class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" href="/profile">Profile</a>
-            </div>
-            <button class="font-['Manrope'] font-bold text-sm text-slate-500 hover:text-[#004b87]" onclick="logout()">Logout</button>
-        </nav>
-    </header>
-
-    <main class="pt-24 px-8 max-w-7xl mx-auto space-y-8 pb-12">
-        <div>
-            <h1 class="text-4xl font-extrabold text-primary tracking-tight mb-2">History</h1>
-            <p class="text-on-surface-variant font-medium">Review and audit your complete financial ledger and security logs.</p>
-        </div>
-        
-        <div class="bg-white rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="bg-slate-50 border-b border-outline-variant/10 text-[10px] font-extrabold text-outline uppercase tracking-widest">
-                            <th class="px-6 py-4">Date</th>
-                            <th class="px-6 py-4">Transaction ID</th>
-                            <th class="px-6 py-4">Recipient</th>
-                            <th class="px-6 py-4 text-center">Type</th>
-                            <th class="px-6 py-4">Amount</th>
-                            <th class="px-6 py-4">Status</th>
-                            <th class="px-6 py-4 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-body" class="divide-y divide-outline-variant/10"></tbody>
-                </table>
-            </div>
-        </div>
-    </main>
-</body>
-</html>
+<body class="bg-surface text-on-surface min-h-screen">
+<header class="fixed top-0 left-0 right-0 z-50 bg-[#f6fafe] dark:bg-slate-950 flex justify-between items-center w-full px-8 py-4 max-w-full mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-extrabold text-[#003461] dark:text-blue-500 tracking-tighter cursor-pointer" onclick="location.href='/'">The Guardian Ledger</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="font-headline font-bold text-sm tracking-tight text-slate-500" href="/">Home</a>
+<a class="font-headline font-bold text-sm tracking-tight text-slate-500" href="/dashboard">Dashboard</a>
+<a class="font-headline font-bold text-sm tracking-tight text-[#003461]" href="/history">History</a>
+<a class="font-headline font-bold text-sm tracking-tight text-slate-500" href="/profile">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="font-headline font-bold text-sm text-slate-500" onclick="logout()">Logout</button>
+</div>
+</header>
+<main class="pt-24 pb-12 px-4 md:px-8 max-w-7xl mx-auto">
+<div class="mb-10">
+<h1 class="text-4xl font-extrabold text-primary tracking-tight mb-2">History</h1>
+<p class="text-on-surface-variant font-medium">Review and audit your complete financial ledger and security logs.</p>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 border-b border-outline-variant/10 text-[10px] font-extrabold text-outline uppercase tracking-widest">
+<th class="px-8 py-5">Intervention Type</th>
+<th class="px-8 py-5">Node Context</th>
+<th class="px-8 py-5">Volume</th>
+<th class="px-8 py-5">Security Classification</th>
+<th class="px-8 py-5">Check Timestamp</th>
+<th class="px-8 py-5 text-right">Audit Options</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10" id="history-body">
+<!-- History rows will be loaded here -->
+</tbody>
+</table>
+</div>
+</div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof loadHistory === 'function') {
+            loadHistory();
+        }
+    });
+</script>
+</body></html>

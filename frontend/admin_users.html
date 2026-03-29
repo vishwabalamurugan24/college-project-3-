@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>User Directory - Admin - The Guardian Ledger</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="/js/script.js" defer></script>
+<link rel="stylesheet" href="/style.css">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-fixed": "#ffdad6",
+              "secondary-container": "#82f5c1",
+              "on-secondary-fixed-variant": "#005137",
+              "on-tertiary": "#ffffff",
+              "inverse-primary": "#a3c9ff",
+              "surface": "#f6fafe",
+              "secondary": "#006c4a",
+              "surface-container-high": "#e4e9ed",
+              "on-tertiary-container": "#ffa096",
+              "primary-fixed": "#d3e4ff",
+              "error-container": "#ffdad6",
+              "surface-bright": "#f6fafe",
+              "on-background": "#171c1f",
+              "on-secondary-container": "#00714e",
+              "on-secondary-fixed": "#002114",
+              "error": "#ba1a1a",
+              "surface-variant": "#dfe3e7",
+              "surface-dim": "#d6dade",
+              "on-tertiary-fixed": "#410002",
+              "tertiary-fixed-dim": "#ffb4ab",
+              "outline": "#727781",
+              "primary": "#003461",
+              "on-surface": "#171c1f",
+              "on-error": "#ffffff",
+              "surface-container-highest": "#dfe3e7",
+              "secondary-fixed-dim": "#68dba9",
+              "primary-container": "#004b87",
+              "on-surface-variant": "#424750",
+              "on-primary-fixed-variant": "#004882",
+              "outline-variant": "#c2c6d1",
+              "primary-fixed-dim": "#a3c9ff",
+              "inverse-surface": "#2c3134",
+              "on-primary-container": "#8abcff",
+              "on-primary": "#ffffff",
+              "surface-tint": "#27609d",
+              "surface-container-lowest": "#ffffff",
+              "tertiary": "#6e0006",
+              "tertiary-container": "#99000c",
+              "surface-container": "#eaeef2",
+              "surface-container-low": "#f0f4f8",
+              "on-tertiary-fixed-variant": "#93000b",
+              "background": "#f6fafe",
+              "on-error-container": "#93000a",
+              "on-primary-fixed": "#001c38",
+              "secondary-fixed": "#85f8c4",
+              "inverse-on-surface": "#edf1f5",
+              "on-secondary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen flex">
+<!-- Sidebar -->
+<aside class="w-72 bg-white border-r border-outline-variant/10 flex flex-col fixed h-screen z-40">
+<div class="p-8 pb-12">
+<span class="text-xl font-extrabold text-[#003461] tracking-tighter" onclick="location.href='/'">The Guardian Ledger</span>
+<p class="text-[10px] uppercase tracking-[0.2em] font-bold text-outline mt-2">Administrative Core</p>
+</div>
+<nav class="flex-1 px-4 space-y-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:bg-surface-container-low hover:text-primary font-medium transition-all" href="/admin">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+            System Overview
+        </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-surface-container-high text-primary font-bold transition-all" href="/admin/users">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+            User Directory
+        </a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline hover:bg-surface-container-low hover:text-primary font-medium transition-all" href="/admin/monitoring">
+<span class="material-symbols-outlined" data-icon="security_update_good">security_update_good</span>
+            Fraud Monitoring
+        </a>
+</nav>
+<div class="p-8 border-t border-outline-variant/10">
+<button class="flex items-center gap-3 text-outline font-bold hover:text-error transition-colors" onclick="logout()">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+            Exit Terminal
+        </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-72 flex-1 p-12">
+<header class="flex justify-between items-end mb-12">
+<div>
+<h1 class="text-4xl font-extrabold text-[#003461] tracking-tight">Identity Catalog</h1>
+<p class="text-on-surface-variant font-medium">Directory of authenticated Ledger participants.</p>
+</div>
+<div class="flex items-center gap-4 bg-white/50 px-4 py-2 rounded-lg border border-outline-variant/10">
+<div class="relative">
+<input class="w-64 bg-surface-container-high border-none rounded-lg py-2 pl-10 pr-4 text-sm font-medium focus:ring-2 focus:ring-primary focus:bg-white transition-all" placeholder="Search Identity" type="text"/>
+<span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-outline text-sm">search</span>
+</div>
+</div>
+</header>
+<div class="bg-white rounded-xl shadow-sm border border-outline-variant/10 overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="text-xs font-bold uppercase tracking-widest text-outline bg-surface-container-low border-b border-outline-variant/10">
+<th class="px-8 py-5">Node ID</th>
+<th class="px-8 py-5">Participant Identity</th>
+<th class="px-8 py-5">Authentication Date</th>
+<th class="px-8 py-5">Access Tier</th>
+<th class="px-8 py-5 text-right">Terminal Controls</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10" id="user-directory-body">
+<!-- User directory will be loaded here -->
+<tr class="animate-pulse">
+<td class="px-8 py-4"><div class="h-4 bg-slate-100 rounded w-16"></div></td>
+<td class="px-8 py-4"><div class="h-4 bg-slate-100 rounded w-32"></div></td>
+<td class="px-8 py-4"><div class="h-4 bg-slate-100 rounded w-24"></div></td>
+<td class="px-8 py-4"><div class="h-4 bg-slate-100 rounded w-20"></div></td>
+<td class="px-8 py-4"><div class="h-4 bg-slate-100 rounded w-12 ml-auto"></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        if (typeof loadUserDirectory === 'function') {
+            loadUserDirectory();
+        }
+    });
+</script>
+</body></html>
