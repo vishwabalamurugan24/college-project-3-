@@ -1,19 +1,59 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    }
-  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "routes": [
     {
-      "src": "/(js|css)/(.*)",
-      "dest": "/frontend/$1/$2"
+      "src": "/js/(.*)",
+      "dest": "/frontend/js/$1"
     },
     {
-      "src": "/(.*)",
-      "dest": "api/index.py"
+      "src": "/(.*).html",
+      "dest": "/frontend/$1.html"
+    },
+    {
+      "src": "/style.css",
+      "dest": "/frontend/style.css"
+    },
+    {
+        "src": "/login",
+        "dest": "/frontend/login.html"
+    },
+    {
+        "src": "/register",
+        "dest": "/frontend/register.html"
+    },
+    {
+        "src": "/dashboard",
+        "dest": "/frontend/dashboard.html"
+    },
+    {
+        "src": "/transaction",
+        "dest": "/frontend/transaction.html"
+    },
+    {
+        "src": "/history",
+        "dest": "/frontend/history.html"
+    },
+    {
+        "src": "/profile",
+        "dest": "/frontend/profile.html"
+    },
+    {
+        "src": "/admin",
+        "dest": "/frontend/admin_dashboard.html"
+    },
+    {
+        "src": "/admin/users",
+        "dest": "/frontend/admin_users.html"
+    },
+    {
+        "src": "/admin/monitoring",
+        "dest": "/frontend/admin_monitoring.html"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/index.html"
     }
   ]
 }

@@ -18,6 +18,35 @@ The Guardian Ledger is a premium, intelligent web-based platform designed to pro
 - **ML Engine**: Scikit-learn (Random Forest Classifier), Pandas.
 - **Visuals**: Chart.js for admin analytics, Material Symbols for modern iconography.
 
+## 🚀 The Guardian Ledger v5.0 (Cloud Edition)
+
+The project is now configured with a **decoupled architecture** for high-performance cloud hosting:
+
+### 🌐 Frontend (Vercel)
+The user interface is a pure static site optimized for Vercel's global CDN:
+- **Deployment**: Connect your GitHub repository to Vercel and select the root directory.
+- **Routing**: Managed automatically by `vercel.json` (supports clean URLs like `/dashboard`).
+- **Configuration**: Set `API_BASE` in `frontend/js/script.js` to your backend URL.
+
+### 🧠 Backend (Render)
+The Neural Engine API is optimized for Render's serverless/web service environment:
+- **Deployment**: Deploy the root directory to Render as a **Web Service**.
+- **Build Command**: `pip install -r requirements.txt`
+- **Start Command**: `gunicorn "backend.app:create_app()"`
+- **Health Check**: Configured at `/api/health`.
+
+### 🛠️ Local Development
+To run the specialized monolithic mode locally:
+1. Ensure `python` and all dependencies are installed.
+2. Execute `python start_website.py`.
+3. The system will perform a neural health check and open the ledger at `localhost:5000`.
+
+> [!IMPORTANT]
+> **Manual Requirement Update**: Before deploying to Render, manually add `gunicorn` to a new line in your `requirements.txt`. (This is necessary for the production WSGI server).
+
+---
+*Developed for 'Net Banking Fraud Detection' modernization.*
+
 ## 📦 Quick Start
 
 ### 1. Prerequisites

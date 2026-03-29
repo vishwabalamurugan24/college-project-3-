@@ -2,7 +2,9 @@
  * The Guardian Ledger - Multi-page Refactor
  */
 
-const API_BASE = 'http://127.0.0.1:5000/api';
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+    ? 'http://127.0.0.1:5000/api' 
+    : 'https://YOUR-RENDER-BACKEND-URL.onrender.com/api'; // REPLACE THIS WITH YOUR RENDER URL
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let adminChart = null;
 
