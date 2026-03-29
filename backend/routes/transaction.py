@@ -1,9 +1,9 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
 from datetime import datetime
-from ..models.transaction_model import Transaction, FraudAlert
-from ..models import db
-from ..utils.fraud_check import FraudDetector
+from backend.models.transaction_model import Transaction, FraudAlert
+from backend.models import db
+from backend.utils.fraud_check import FraudDetector
 
 transaction_bp = Blueprint('transaction', __name__)
 detector = FraudDetector()

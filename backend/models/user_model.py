@@ -4,7 +4,7 @@ from datetime import datetime
 
 # Import db from the main app or a shared extensions file
 # For simplicity in this refactor, we'll assume db is passed or imported
-from . import db
+from backend.models import db
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

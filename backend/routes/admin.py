@@ -1,8 +1,8 @@
 from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
-from ..models.user_model import User
-from ..models.transaction_model import Transaction, FraudAlert
-from ..models import db
+from backend.models.user_model import User
+from backend.models.transaction_model import Transaction, FraudAlert
+from backend.models import db
 
 admin_bp = Blueprint('admin', __name__)
 

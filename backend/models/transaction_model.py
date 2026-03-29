@@ -1,5 +1,5 @@
 from datetime import datetime
-from . import db
+from backend.models import db
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)

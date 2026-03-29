@@ -4,10 +4,10 @@ from flask_login import LoginManager
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash
 
-from .models import db, User
-from .routes.auth import auth_bp
-from .routes.transaction import transaction_bp
-from .routes.admin import admin_bp
+from backend.models import db, User
+from backend.routes.auth import auth_bp
+from backend.routes.transaction import transaction_bp
+from backend.routes.admin import admin_bp
 
 def create_app():
     app = Flask(__name__, static_folder='../frontend', template_folder='../frontend')
