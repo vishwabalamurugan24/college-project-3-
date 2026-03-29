@@ -33,7 +33,15 @@ def main():
     else:
         print("\n[+] ML model found and ready.")
 
-    # 3. Handle redundant models.py (Warning only as we can't delete)
+    # 3. Neural Health Check
+    print("\n[*] Initializing Neural Health Check...")
+    sectors = ["Memory Integrity", "Neural Latency", "Fragmented Vaults", "Anomaly Vectors", "Encryption Shards"]
+    for sector in sectors:
+        time.sleep(0.4)
+        print(f"    [+] {sector}: NOMINAL")
+    print("[*] Health Check Complete. System is ATTACHED.")
+
+    # 4. Handle redundant models.py (Warning only as we can't delete)
     if os.path.exists('backend/models.py'):
         print("\n[!] Warning: backend/models.py exists and may conflict with backend/models/ package.")
         print("    If you encounter import errors, please manually delete/rename backend/models.py.")

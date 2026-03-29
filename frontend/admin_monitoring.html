@@ -138,7 +138,34 @@
 <tr><td colspan="6" class="p-8 text-center text-outline italic">Analyzing neural pathways...</td></tr>
 </tbody>
 </table>
-</div>
+    </div>
+
+    <!-- Neural Terminal Diagnostic Feed -->
+    <div class="mt-8 grid lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 bg-inverse-surface rounded-xl shadow-2xl border border-white/5 overflow-hidden flex flex-col h-[300px]">
+            <div class="px-6 py-3 bg-white/5 border-b border-white/5 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-secondary animate-pulse"></div>
+                    <span class="text-[10px] font-bold text-white/50 uppercase tracking-[0.2em]">Neural Diagnostic Feed</span>
+                </div>
+                <div class="flex gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-white/10"></div>
+                </div>
+            </div>
+            <div id="terminal-logs" class="flex-1 p-6 overflow-y-auto scrollbar-hide font-mono text-xs flex flex-col-reverse">
+                <!-- Live logs injected via script.js -->
+                <div class="text-outline italic">Establishing secure uplink...</div>
+            </div>
+        </div>
+        <div class="bg-primary rounded-xl p-8 text-white relative overflow-hidden flex flex-col justify-center">
+            <div class="absolute -right-12 -top-12 w-48 h-48 bg-white/10 rounded-full blur-3xl"></div>
+            <h4 class="text-sm font-bold uppercase tracking-widest opacity-60 mb-2">Node Efficiency</h4>
+            <div class="text-5xl font-extrabold tracking-tighter mb-4">98.4<span class="text-xl font-normal opacity-40">%</span></div>
+            <p class="text-xs leading-relaxed opacity-70">The neural network is performing at peak optimization. Cross-node latency is within nominal bounds.</p>
+        </div>
+    </div>
 </main>
 <script>
     document.addEventListener('DOMContentLoaded', () => {

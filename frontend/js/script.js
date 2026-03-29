@@ -8,6 +8,7 @@ let adminChart = null;
 
 // PAGE INITIALIZATION
 document.addEventListener('DOMContentLoaded', () => {
+    initTheme();
     const path = window.location.pathname;
     
     // Check authentication for protected pages
@@ -21,16 +22,56 @@ document.addEventListener('DOMContentLoaded', () => {
     if (path === '/dashboard') loadUserDashboard();
     if (path === '/history') loadHistory();
     if (path === '/profile') loadProfile();
-    if (path === '/admin') {
+    if (path === '/admin' || path.startsWith('/admin/')) {
         loadAdminDashboard();
-        loadFlaggedLedger();
-        loadUserDirectory();
+        if (path === '/admin/monitoring') {
+            loadFlaggedLedger();
+            startNeuralTerminal();
+        }
+        if (path === '/admin/users') loadUserDirectory();
     }
     
     if (currentUser) {
         updateNavbar();
     }
 });
+
+function initTheme() {
+    const theme = localStorage.getItem('guardian-theme') || 'light';
+    document.documentElement.className = theme;
+}
+
+function toggleTheme() {
+    const current = document.documentElement.className;
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.className = next;
+    localStorage.setItem('guardian-theme', next);
+}
+
+function startNeuralTerminal() {
+    const messages = [
+        "Auditing node integrity...",
+        "Neural patterns synchronized.",
+        "Anomaly detected in Sector 7G.",
+        "Proactive halt initiated on packet #882.",
+        "Verifying hardware signature...",
+        "Identity confirmed. Resuming stream.",
+        "Cross-referencing geographic nodes..."
+    ];
+    
+    const terminal = document.getElementById('terminal-logs');
+    if (!terminal) return;
+
+    setInterval(() => {
+        const msg = messages[Math.floor(Math.random() * messages.length)];
+        const time = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.className = 'text-[10px] font-mono mb-1 text-secondary opacity-0 animate-fade-in-up';
+        entry.innerHTML = `<span class="text-outline">[${time}]</span> ${msg}`;
+        terminal.prepend(entry);
+        if (terminal.children.length > 50) terminal.removeChild(terminal.lastChild);
+    }, 2500);
+}
 
 function updateNavbar() {
     const userDisplay = document.getElementById('profile-name');

@@ -17,6 +17,9 @@
         <nav class="flex justify-between items-center w-full px-8 py-4 max-w-7xl mx-auto">
             <span class="text-xl font-extrabold text-[#003461] tracking-tighter font-headline cursor-pointer" onclick="location.href='/'">The Guardian Ledger</span>
             <div class="flex items-center gap-4">
+                <button onclick="toggleTheme()" class="p-2 rounded-lg hover:bg-surface-container-low text-outline transition-colors">
+                    <span class="material-symbols-outlined text-xl">dark_mode</span>
+                </button>
                 <a href="/login" class="font-bold text-sm text-primary">Login</a>
                 <a href="/register" class="vault-gradient text-white px-6 py-2 rounded-lg font-bold text-sm">Join</a>
             </div>
@@ -40,6 +43,63 @@
                     <div class="flex gap-4">
                         <a href="/login" class="vault-gradient text-white px-8 py-4 rounded-lg font-bold text-base shadow-lg transition-transform hover:scale-105 active:scale-95">Login to Vault</a>
                         <a href="/register" class="border-2 border-outline-variant text-primary px-8 py-4 rounded-lg font-bold text-base hover:bg-surface-container-low transition-colors">Register</a>
+                    </div>
+                </div>
+                <div class="relative hidden lg:block">
+                    <div class="absolute -inset-4 bg-gradient-to-tr from-primary/20 to-secondary/20 blur-3xl rounded-full"></div>
+                    <div class="relative bg-white/40 backdrop-blur-xl border border-white/20 p-8 rounded-2xl shadow-2xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <span class="text-sm font-bold text-primary uppercase tracking-widest">Global Status</span>
+                            <span class="flex items-center gap-2 text-secondary text-xs font-bold">
+                                <span class="relative flex h-2 w-2">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-secondary opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-2 w-2 bg-secondary"></span>
+                                </span>
+                                ACTIVE NODES
+                            </span>
+                        </div>
+                        <div class="space-y-6">
+                            <div class="h-12 bg-surface-container-low rounded-lg animate-pulse"></div>
+                            <div class="h-24 bg-surface-container-low rounded-lg animate-pulse"></div>
+                            <div class="grid grid-cols-3 gap-4">
+                                <div class="h-16 bg-surface-container-low rounded-lg animate-pulse"></div>
+                                <div class="h-16 bg-surface-container-low rounded-lg animate-pulse"></div>
+                                <div class="h-16 bg-surface-container-low rounded-lg animate-pulse"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Grid -->
+        <section class="bg-white py-24 px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-extrabold text-primary mb-4">Neural Defense Architecture</h2>
+                    <p class="text-on-surface-variant max-w-2xl mx-auto">The Guardian Ledger isn't just a bank; it's a living security organism that evolves as new threats emerge.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="p-8 rounded-2xl border border-outline-variant/10 hover:shadow-xl transition-shadow group">
+                        <div class="w-12 h-12 bg-primary-fixed rounded-xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">bolt</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Millisecond Audits</h3>
+                        <p class="text-on-surface-variant text-sm">Every packet of data is verified against 1,400 security vectors before being written to the ledger.</p>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-outline-variant/10 hover:shadow-xl transition-shadow group">
+                        <div class="w-12 h-12 bg-secondary-container rounded-xl flex items-center justify-center text-secondary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">psychology</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Neural AI-Guard</h3>
+                        <p class="text-on-surface-variant text-sm">Utilizing Random Forest classifiers to predict and intercept fraudulent behavior in real-time.</p>
+                    </div>
+                    <div class="p-8 rounded-2xl border border-outline-variant/10 hover:shadow-xl transition-shadow group">
+                        <div class="w-12 h-12 bg-tertiary-fixed rounded-xl flex items-center justify-center text-tertiary mb-6 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined">hub</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-primary mb-3">Decentralized Trust</h3>
+                        <p class="text-on-surface-variant text-sm">Your assets are distributed across a fragmented network, making them immune to monolithic attacks.</p>
                     </div>
                 </div>
             </div>
