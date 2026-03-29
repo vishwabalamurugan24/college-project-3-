@@ -15,7 +15,7 @@ def run_command(command, description):
 
 def main():
     print("====================================================")
-    print("   Net Banking Fraud Detection - Startup Utility    ")
+    print("      THE GUARDIAN LEDGER - Neural Startup v4.0      ")
     print("====================================================")
     
     # 1. Install dependencies
