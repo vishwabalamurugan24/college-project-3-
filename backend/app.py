@@ -10,9 +10,14 @@ from backend.routes.transaction import transaction_bp
 from backend.routes.admin import admin_bp
 
 def create_app():
-    app = Flask(__name__, static_folder='../frontend', template_folder='../frontend')
+    # Use absolute paths for Vercel deployment consistency
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    frontend_dir = os.path.join(base_dir, '..', 'frontend')
+    
+    app = Flask(__name__, static_folder=frontend_dir, template_folder=frontend_dir)
     app.config['SECRET_KEY'] = 'secure-banking-key-123'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///netbanking.db'
+    db_path = os.path.join(base_dir, '..', 'netbanking.db')
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_path}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
     CORS(app)
