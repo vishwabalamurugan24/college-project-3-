@@ -1,70 +1,25 @@
-import subprocess
-import sys
 import os
-import time
 import webbrowser
-
-def run_command(command, description):
-    print(f"\n[*] {description}...")
-    try:
-        subprocess.check_call([sys.executable, "-m"] + command)
-    except subprocess.CalledProcessError as e:
-        print(f"[!] Error during {description}: {e}")
-        return False
-    return True
+import time
 
 def main():
     print("====================================================")
-    print("      THE GUARDIAN LEDGER - Neural Startup v4.0      ")
+    print("      THE GUARDIAN LEDGER - Static Frontend Loop     ")
     print("====================================================")
+    print("[*] The backend and ML modules have been uninstalled.\n[*] Launching the frontend in static mode...")
     
-    # 1. Install dependencies
-    if not run_command(["pip", "install", "-r", "requirements.txt"], "Installing dependencies"):
-        print("Failed to install dependencies. Please check your internet connection and try again.")
-        return
-
-    # 2. Train model if missing
-    if not os.path.exists('data/fraud_model.joblib'):
-        print("\n[*] Model not found. Training now...")
-        try:
-            subprocess.check_call([sys.executable, "ml/train_model.py"])
-        except subprocess.CalledProcessError:
-            print("[!] Training failed. The system will use fallback rules.")
-    else:
-        print("\n[+] ML model found and ready.")
-
-    # 3. Neural Health Check
-    print("\n[*] Initializing Neural Health Check...")
-    sectors = ["Memory Integrity", "Neural Latency", "Fragmented Vaults", "Anomaly Vectors", "Encryption Shards"]
-    for sector in sectors:
-        time.sleep(0.4)
-        print(f"    [+] {sector}: NOMINAL")
-    print("[*] Health Check Complete. System is ATTACHED.")
-
-    # 4. Handle redundant models.py (Warning only as we can't delete)
-    if os.path.exists('backend/models.py'):
-        print("\n[!] Warning: backend/models.py exists and may conflict with backend/models/ package.")
-        print("    If you encounter import errors, please manually delete/rename backend/models.py.")
-
-    # 4. Start the server
-    print("\n[*] Starting Flask server at http://127.0.0.1:5000 ...")
+    # Get absolute path to the HTML file
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    frontend_path = os.path.join(current_dir, "fraudshield-frontend", "index.html")
     
-    # Try to open browser after a short delay
-    def open_browser():
-        time.sleep(3)
-        print("[*] Opening browser...")
-        webbrowser.open("http://127.0.0.1:5000")
-
-    import threading
-    threading.Thread(target=open_browser, daemon=True).start()
-
-    try:
-        # We run this as a module to ensure absolute imports work
-        subprocess.check_call([sys.executable, "-m", "backend.app"])
-    except KeyboardInterrupt:
-        print("\n[!] Server stopped by user.")
-    except Exception as e:
-        print(f"\n[!] Server error: {e}")
+    file_url = f"file:///{frontend_path.replace(os.sep, '/')}"
+    
+    time.sleep(1)
+    print(f"[*] Opening browser securely to: {frontend_path}")
+    
+    # Open the file in the default browser
+    webbrowser.open(file_url)
+    print("[+] Browser launched successfully! You can close this window at any time.")
 
 if __name__ == "__main__":
     main()
