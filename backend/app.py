@@ -10,12 +10,12 @@ from backend.routes.transaction import transaction_bp
 from backend.routes.admin import admin_bp
 
 def create_app():
-    app = Flask(__name__, static_folder='../frontend', template_folder='../frontend', static_url_path='')
+    app = Flask(__name__, static_folder='../fraudshield-frontend', template_folder='../fraudshield-frontend', static_url_path='')
     app.config['SECRET_KEY'] = 'secure-banking-key-123'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///netbanking.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    CORS(app, resources={r"/api/*": {"origins": "*"}}) # Allow all origins for the API initially
+    CORS(app, resources={r"/api/*": {"origins": "*"}}, supports_credentials=True)
     db.init_app(app)
 
     login_manager = LoginManager(app)
@@ -30,11 +30,14 @@ def create_app():
     app.register_blueprint(transaction_bp, url_prefix='/api')
     app.register_blueprint(admin_bp, url_prefix='/api')
 
-    @app.route('/api/health')
-    def health_check():
-        return {"status": "NOMINAL", "identity": "Guardian Ledger AI API"}, 200
-
-    # Removed HTML routes for the static separation. Frontend is on Vercel.
+    # Catch-all route to serve the SPA frontend
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def serve(path):
+        if path != "" and os.path.exists(app.static_folder + '/' + path):
+            return send_from_directory(app.static_folder, path)
+        else:
+            return send_from_directory(app.static_folder, 'index.html')
 
     with app.app_context():
         db.create_all()
@@ -48,5 +51,6 @@ def create_app():
 
 if __name__ == '__main__':
     app = create_app()
+    # Port handling for Render
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port)
