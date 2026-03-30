@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudShield AI | Secure Neural Banking</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-mode">
+    <div class="glow-overlay"></div>
+    
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container">
+            <div class="logo" onclick="showView('home')">
+                <span class="material-symbols-outlined logo-icon">shield_with_heart</span>
+                <span class="logo-text">FRAUD<span>SHIELD</span> AI</span>
+            </div>
+            
+            <nav class="nav-links" id="main-nav">
+                <!-- Links will be dynamically shown based on auth status -->
+                <div id="guest-links">
+                    <a href="#" onclick="showView('home')" class="nav-link">Home</a>
+                    <button class="primary-btn-sm" onclick="showView('auth')">Launch Vault</button>
+                </div>
+                
+                <div id="user-links" class="hidden">
+                    <a href="#" onclick="showView('dashboard')" class="nav-link">Dashboard</a>
+                    <a href="#" onclick="showView('transfer')" class="nav-link">Transact</a>
+                    <a href="#" onclick="showView('history')" class="nav-link">Ledger</a>
+                    <button class="outline-btn-sm" onclick="logout()">Secure Exit</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container content-area">
+        
+        <!-- VIEW: HOME (Landing Page) -->
+        <section id="view-home" class="view">
+            <div class="hero-section">
+                <div class="badge">SECURED BY NEURAL-LEGER v4.0</div>
+                <h1 class="hero-title">Banking Security <br>Powered by AI.</h1>
+                <p class="hero-subtitle">The first neural defense layer for your personal assets. Intercepting threats before they hit your balance.</p>
+                <div class="hero-btns">
+                    <button class="primary-btn" onclick="showView('auth')">Get Started</button>
+                    <button class="outline-btn" onclick="document.getElementById('features').scrollIntoView()">Learn More</button>
+                </div>
+            </div>
+            
+            <div id="features" class="features-grid">
+                <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">bolt</span>
+                    <h3>Millisecond Audits</h3>
+                    <p>Every transaction is verified against 1,400 security vectors in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="material-symbols-outlined feature-icon">psychology</span>
+                    <h3>Neural AI-Guard</h3>
+                    <p>Random Forest classifiers predict and intercept fraudulent behavior.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: AUTH (Login & Register) -->
+        <section id="view-auth" class="view hidden">
+            <div class="auth-container glass-panel">
+                <div class="auth-tabs">
+                    <button id="tab-login" class="auth-tab active" onclick="toggleAuthMode('login')">Login</button>
+                    <button id="tab-register" class="auth-tab" onclick="toggleAuthMode('register')">Register</button>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="form-login" class="auth-form">
+                    <h2 class="form-title">Welcome Back</h2>
+                    <div class="input-group">
+                        <label>Vault ID / Username</label>
+                        <input type="text" id="login-user" placeholder="Enter your ID">
+                    </div>
+                    <div class="input-group">
+                        <label>Access Key / Password</label>
+                        <input type="password" id="login-pass" placeholder="••••••••">
+                    </div>
+                    <button class="primary-btn full-width" onclick="handleLogin()">AUTHENTICATE</button>
+                </div>
+
+                <!-- Register Form -->
+                <div id="form-register" class="auth-form hidden">
+                    <h2 class="form-title">Initialize Vault</h2>
+                    <div class="input-group">
+                        <label>Choose Username</label>
+                        <input type="text" id="reg-user" placeholder="Choose a unique ID">
+                    </div>
+                    <div class="input-group">
+                        <label>Secret Access Key</label>
+                        <input type="password" id="reg-pass" placeholder="Password (Min 8 chars)">
+                    </div>
+                    <button class="primary-btn full-width" onclick="handleRegister()">CREATE VAULT</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: DASHBOARD (User Overview) -->
+        <section id="view-dashboard" class="view hidden">
+            <div class="dash-grid">
+                <!-- User Stats -->
+                <div class="glass-panel stat-box">
+                    <div class="stat-header">
+                        <h2 class="panel-title">Available Capital</h2>
+                        <span class="material-symbols-outlined panel-icon">account_balance_wallet</span>
+                    </div>
+                    <div class="balance-display" id="user-balance">$0.00</div>
+                    <div class="stat-footer">
+                        <span class="status-badge safe">Secured Assets</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="glass-panel quick-actions">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Neural Health</h2>
+                        <span class="material-symbols-outlined panel-icon">security</span>
+                    </div>
+                    <div class="health-checker">
+                        <div class="health-label">System Integrity</div>
+                        <div class="health-bar-bg"><div class="health-bar-fill" id="health-bar"></div></div>
+                        <p class="health-status-text">99.8% Accuracy • Active Defense</p>
+                    </div>
+                    <button class="primary-btn-sm full-width mt-4" onclick="showView('transfer')">
+                        <span class="material-symbols-outlined">send</span> Send Capital
+                    </button>
+                </div>
+
+                <!-- Recent Ledger Feed -->
+                <div class="glass-panel full-panel">
+                    <div class="panel-header">
+                        <h2 class="panel-title">Recent Activity</h2>
+                        <button class="text-btn" onclick="showView('history')">View Full Ledger</button>
+                    </div>
+                    <div class="ledger-preview" id="dash-history-list">
+                        <!-- Activity items will be loaded here -->
+                        <div class="loading-spinner">Waking up Neural Core...</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: TRANSFER (Send Money) -->
+        <section id="view-transfer" class="view hidden">
+            <div class="transfer-container glass-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Transfer Capital</h2>
+                    <span class="material-symbols-outlined panel-icon">payments</span>
+                </div>
+                
+                <div class="transfer-form">
+                    <div class="input-group">
+                        <label>Destination Vault ID</label>
+                        <input type="text" id="trans-receiver" placeholder="Receiver Username">
+                    </div>
+                    <div class="input-group">
+                        <label>Transfer Amount ($)</label>
+                        <input type="number" id="trans-amount" placeholder="0.00">
+                    </div>
+                    
+                    <div class="security-indicator" id="security-indicator">
+                        <span class="material-symbols-outlined" id="sec-icon">security</span>
+                        <div class="sec-text-box">
+                            <h4 id="sec-title">AI-Leger Shield: Active</h4>
+                            <p id="sec-status">Analyzing destination risk profile...</p>
+                        </div>
+                    </div>
+                    
+                    <button class="primary-btn full-width" onclick="processTransaction()" id="btn-transfer">
+                        EXECUTE SECURE TRANSFER
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW: HISTORY (Full Ledger) -->
+        <section id="view-history" class="view hidden">
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Transaction Ledger</h2>
+                    <span class="material-symbols-outlined panel-icon">history</span>
+                </div>
+                <div class="table-container">
+                    <table class="ledger-table">
+                        <thead>
+                            <tr>
+                                <th>Date/Time</th>
+                                <th>Ref ID</th>
+                                <th>Beneficiary</th>
+                                <th>Type</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <!-- Rows will be dynamically loaded -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fraud Alert Modal -->
+    <div id="fraud-modal" class="modal-overlay hidden">
+        <div class="modal-content glass-panel danger">
+            <span class="material-symbols-outlined modal-icon">report_problem</span>
+            <h2>FRAUD ALERT DETECTED</h2>
+            <p id="fraud-modal-msg">Neural AI has flagged this transaction as high-risk.</p>
+            <div class="modal-details">
+                <p>Target: <span id="fraud-target">---</span></p>
+                <p>Value: <span id="fraud-value">$0.00</span></p>
+                <p>Vector: <span id="fraud-vector">Unusual behavioral pattern</span></p>
+            </div>
+            <div class="modal-btns">
+                <button class="danger-btn" onclick="closeFraudModal()">CANCEL TRANSACTION</button>
+                <button class="text-btn" onclick="closeFraudModal()">DISPUTE ACTION</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <footer class="footer">
+        <p>&copy; 2026 FraudShield AI Systems. Neural Security Architecture V4.0.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
