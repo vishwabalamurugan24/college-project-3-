@@ -6,7 +6,7 @@
 
 // Configuration - Point this to your Render service URL once deployed
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-    ? 'http://127.0.0.1:5000/api' 
+    ? 'http://127.0.0.1:3000/api' 
     : 'https://fraudshield-backend.onrender.com/api'; // Replace with your Render URL
 
 let currentUser = null;

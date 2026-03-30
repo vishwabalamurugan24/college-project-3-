@@ -1,0 +1,28 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "username": "admin",
+            "password": "adminpassword123",
+            "balance": 125000.50,
+            "transactions": [
+                {
+                    "id": "1004",
+                    "receiver": "AWS_Cloud",
+                    "amount": -145.00,
+                    "timestamp": "2026-03-29 09:12",
+                    "status": "Secured",
+                    "is_fraud": false
+                },
+                {
+                    "id": "1002",
+                    "receiver": "Salary_Deposit",
+                    "amount": 5400.00,
+                    "timestamp": "2026-03-28 15:45",
+                    "status": "Secured",
+                    "is_fraud": false
+                }
+            ]
+        }
+    ]
+}
