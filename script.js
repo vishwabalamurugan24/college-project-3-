@@ -4,16 +4,15 @@
  * Optimized for Vercel (Frontend) & Render (Backend)
  */
 
-// Configuration - Point this to your Render service URL once deployed
 const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
     ? 'http://127.0.0.1:3000/api' 
-    : 'https://fraudshield-backend.onrender.com/api'; // Replace with your Render URL
+    : 'https://fraudshield-backend.onrender.com/api'; 
 
 let currentUser = null;
 let currentView = 'home';
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("Neural Core: INITIALIZED");
+    console.log("Neural Core: INITIALIZED (Tailwind Version)");
     initApp();
 });
 
@@ -21,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
  * App Initialization
  */
 function initApp() {
-    // Check if user is already "logged in" (for demo/session purposes)
     const savedUser = localStorage.getItem('fraudshield_user');
     if (savedUser) {
         currentUser = JSON.parse(savedUser);
@@ -36,15 +34,20 @@ function initApp() {
  * SPA View Router
  */
 function showView(viewId) {
-    // Hide all views
-    document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+    // Hide all views explicitly (Tailwind compatibility)
+    document.querySelectorAll('.view-layer').forEach(v => {
+        if(v.id !== 'fraud-modal') {
+            v.classList.add('hidden-view');
+        }
+    });
     
     // Show target view
     const target = document.getElementById(`view-${viewId}`);
     if (target) {
-        target.classList.remove('hidden');
+        target.classList.remove('hidden-view');
         window.scrollTo(0, 0);
         currentView = viewId;
+        updateNavHighlight(viewId);
     }
 
     // Trigger data loading for specific views
@@ -53,15 +56,39 @@ function showView(viewId) {
     if (viewId === 'transfer') resetTransferForm();
 }
 
+function updateNavHighlight(viewId) {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        if(btn.dataset.target === viewId) {
+            btn.classList.add('text-[#003461]', 'border-b-2', 'border-[#003461]', 'pb-1');
+            btn.classList.remove('text-slate-500');
+        } else {
+            btn.classList.remove('text-[#003461]', 'border-b-2', 'border-[#003461]', 'pb-1');
+            btn.classList.add('text-slate-500');
+        }
+    });
+}
+
 /**
- * Section: Authentication
+ * Authentication
  */
 function toggleAuthMode(mode) {
     const isLogin = mode === 'login';
-    document.getElementById('form-login').classList.toggle('hidden', !isLogin);
-    document.getElementById('form-register').classList.toggle('hidden', isLogin);
-    document.getElementById('tab-login').classList.toggle('active', isLogin);
-    document.getElementById('tab-register').classList.toggle('active', !isLogin);
+    document.getElementById('form-login').classList.toggle('hidden-view', !isLogin);
+    document.getElementById('form-register').classList.toggle('hidden-view', isLogin);
+    
+    // Tab styling
+    const tabLogin = document.getElementById('tab-login');
+    const tabReg = document.getElementById('tab-register');
+    
+    if(isLogin) {
+        tabLogin.className = "text-lg font-bold text-primary border-b-2 border-primary pb-1";
+        tabReg.className = "text-lg font-bold text-outline hover:text-primary transition-all pb-1";
+        document.querySelector('.auth-hero').innerHTML = "Enter the <br/>Digital Vault.";
+    } else {
+        tabReg.className = "text-lg font-bold text-primary border-b-2 border-primary pb-1";
+        tabLogin.className = "text-lg font-bold text-outline hover:text-primary transition-all pb-1";
+        document.querySelector('.auth-hero').innerHTML = "Initiate <br/>New Ledger.";
+    }
 }
 
 async function handleLogin() {
@@ -122,94 +149,104 @@ function logout() {
     localStorage.removeItem('fraudshield_user');
     updateAuthUI();
     showView('home');
+    showToast('Securely Logged Out', 'safe');
 }
 
 function updateAuthUI() {
     const isAuth = !!currentUser;
-    document.getElementById('guest-links').classList.toggle('hidden', isAuth);
+    document.getElementById('guest-actions').classList.toggle('hidden', isAuth);
     document.getElementById('user-links').classList.toggle('hidden', !isAuth);
+    document.getElementById('user-actions').classList.toggle('hidden', !isAuth);
 }
 
 /**
- * Section: Dashboard & Data Loading
+ * Dashboard & Data Loading
  */
 async function loadDashboardData() {
     const balanceElem = document.getElementById('user-balance');
     const historyList = document.getElementById('dash-history-list');
 
     try {
-        const response = await fetch(`${API_BASE}/dashboard`); // Assuming session handled by cookie or simply public for this project structure
+        const response = await fetch(`${API_BASE}/dashboard`); 
         const data = await response.json();
 
         // Update Balance
-        balanceElem.innerText = `$${parseFloat(data.balance).toLocaleString()}`;
+        balanceElem.innerText = `$${parseFloat(data.balance).toLocaleString('en-US', {minimumFractionDigits: 2})}`;
         
-        // Update Health Bar (Simulated animation)
+        // Update Health Bar 
         const healthBar = document.getElementById('health-bar');
         healthBar.style.width = '0%';
-        setTimeout(() => healthBar.style.width = '99.8%', 100);
+        setTimeout(() => healthBar.style.width = '99.8%', 300);
 
-        // Render Recent Activity Preview (Top 3)
+        // Render Recent Activity Preview
         if (data.transactions && data.transactions.length > 0) {
-            historyList.innerHTML = data.transactions.slice(0, 3).map(t => renderLedgerPreviewItem(t)).join('');
+            historyList.innerHTML = `<div class="space-y-3">` + data.transactions.slice(0, 3).map(t => renderLedgerPreviewItem(t)).join('') + `</div>`;
         } else {
-            historyList.innerHTML = '<p class="text-muted">No recent neural activity.</p>';
+            historyList.innerHTML = '<p class="text-on-surface-variant p-4">No recent neural activity.</p>';
         }
 
     } catch (e) {
         balanceElem.innerText = '$---';
-        historyList.innerHTML = '<p class="text-error">Error connecting to Ledger.</p>';
+        historyList.innerHTML = '<p class="text-error p-4">Error connecting to Ledger.</p>';
     }
 }
 
 async function loadLedgerData() {
     const tableBody = document.getElementById('history-body');
-    tableBody.innerHTML = '<tr><td colspan="6" class="text-center">Synchronizing Ledger...</td></tr>';
+    tableBody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">Synchronizing Ledger...</td></tr>';
 
     try {
         const response = await fetch(`${API_BASE}/dashboard`);
         const data = await response.json();
 
         if (data.transactions && data.transactions.length > 0) {
-            tableBody.innerHTML = data.transactions.map(t => `
-                <tr class="fade-in">
-                    <td><span class="text-mono small">${t.timestamp}</span></td>
-                    <td><span class="text-muted text-mono">TX-${t.id}</span></td>
-                    <td><strong>${t.receiver}</strong></td>
-                    <td class="text-muted uppercase small">${t.amount > 0 ? 'Debit' : 'Credit'}</td>
-                    <td><strong class="${t.is_fraud ? 'text-danger' : 'text-primary'}">$${t.amount.toLocaleString()}</strong></td>
-                    <td><span class="status-label ${t.is_fraud ? 'flagged' : 'safe'}">${t.status}</span></td>
+            tableBody.innerHTML = data.transactions.map(t => {
+                const isDebit = t.amount > 0;
+                const statusBadge = t.is_fraud 
+                    ? `<span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-error-container text-error uppercase tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-error mr-2"></span>Blocked</span>`
+                    : `<span class="inline-flex items-center px-3 py-1 rounded-full text-[10px] font-bold bg-secondary-container text-secondary uppercase tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-secondary mr-2"></span>Success</span>`;
+                
+                return `
+                <tr class="hover:bg-surface-container-low transition-colors group border-b border-outline-variant/10">
+                    <td class="px-6 py-5">
+                        <span class="block font-bold text-primary">${t.timestamp}</span>
+                    </td>
+                    <td class="px-6 py-5 font-mono text-xs text-outline">TX-${t.id}</td>
+                    <td class="px-6 py-5 font-bold text-primary">${t.receiver}</td>
+                    <td class="px-6 py-5 text-sm font-medium text-on-surface-variant">${isDebit ? 'Debit' : 'Credit'}</td>
+                    <td class="px-6 py-5 font-extrabold text-lg ${t.is_fraud ? 'text-error line-through' : 'text-primary'}">
+                        $${t.amount.toLocaleString()}
+                    </td>
+                    <td class="px-6 py-5">${statusBadge}</td>
                 </tr>
-            `).join('');
+            `}).join('');
         } else {
-            tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No transactions recorded.</td></tr>';
+            tableBody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-on-surface-variant">No transactions recorded.</td></tr>';
         }
     } catch (e) {
-        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Data sync error.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-error">Data sync error.</td></tr>';
     }
 }
 
 function renderLedgerPreviewItem(t) {
     const initials = t.receiver.substring(0, 2).toUpperCase();
     return `
-        <div class="ledger-item">
-            <div class="item-left">
-                <div class="item-avatar">${initials}</div>
-                <div class="item-info">
-                    <h4>${t.receiver}</h4>
-                    <p>${t.timestamp}</p>
-                </div>
+        <div class="p-3 rounded-lg bg-surface-container-high flex items-center gap-4 hover:shadow-md transition-shadow">
+            <div class="w-10 h-10 rounded-full font-bold flex items-center justify-center shrink-0 ${t.is_fraud ? 'bg-error/10 text-error' : 'bg-primary/10 text-primary'}">${initials}</div>
+            <div class="flex-1 min-w-0">
+                <p class="text-sm font-bold text-on-surface truncate">${t.receiver}</p>
+                <p class="text-xs text-on-surface-variant">${t.timestamp}</p>
             </div>
-            <div class="item-right">
-                <div class="item-amount ${t.is_fraud ? 'text-accent' : ''}">$${t.amount.toLocaleString()}</div>
-                <p class="status-badge ${t.is_fraud ? 'danger' : 'safe'}" style="font-size: 8px;">${t.status}</p>
+            <div class="text-right">
+                <p class="font-extrabold ${t.is_fraud ? 'text-error line-through' : 'text-primary'}">$${t.amount.toLocaleString()}</p>
+                <p class="text-[10px] uppercase font-bold tracking-widest ${t.is_fraud ? 'text-error' : 'text-secondary'}">${t.is_fraud ? 'Intercepted' : 'Secured'}</p>
             </div>
         </div>
     `;
 }
 
 /**
- * Section: Transactions & Fraud Detection
+ * Transactions & Fraud Alerts
  */
 async function processTransaction() {
     const amount = document.getElementById('trans-amount').value;
@@ -218,13 +255,13 @@ async function processTransaction() {
 
     if (!amount || !receiver) return showToast('Incomplete data vectors', 'warning');
 
-    // UI State: Analyzing
+    // UI state
     btn.disabled = true;
-    btn.innerHTML = `<span class="material-symbols-outlined pulse">sync</span> AI GUARD ANALYZING...`;
+    btn.innerHTML = `<span class="material-symbols-outlined animate-spin">refresh</span> VERIFYING...`;
     
-    document.getElementById('sec-icon').className = 'material-symbols-outlined animate-spin';
+    document.getElementById('sec-icon').className = 'material-symbols-outlined text-primary text-3xl animate-bounce';
     document.getElementById('sec-title').innerText = 'NEURAL AUDIT IN PROGRESS';
-    document.getElementById('sec-status').innerText = 'Cross-referencing behavioral patterns...';
+    document.getElementById('sec-status').innerText = 'Evaluating destination routing...';
 
     try {
         const response = await fetch(`${API_BASE}/transaction`, {
@@ -233,7 +270,6 @@ async function processTransaction() {
             body: JSON.stringify({ 
                 amount, 
                 receiver,
-                // Simulate consistent/inconsistent environmental data
                 location_consistency: Math.random() > 0.85 ? 1 : 0, 
                 device_consistency: Math.random() > 0.95 ? 1 : 0
             })
@@ -243,16 +279,16 @@ async function processTransaction() {
         
         setTimeout(() => {
             if (data.is_fraud) {
-                openFraudModal(amount, receiver, data.reason || 'Anomalous Transfer Behavior');
+                openFraudModal(amount, receiver, data.reason || 'Pattern recognition anomaly');
             } else {
                 showToast('Transaction Secured & Executed', 'safe');
                 showView('dashboard');
             }
             
-            // Reset Button
+            resetTransferForm();
             btn.disabled = false;
             btn.innerHTML = `EXECUTE SECURE TRANSFER`;
-        }, 1200);
+        }, 800);
 
     } catch (e) {
         showToast('Neural link failed.', 'danger');
@@ -264,28 +300,25 @@ async function processTransaction() {
 function resetTransferForm() {
     document.getElementById('trans-amount').value = '';
     document.getElementById('trans-receiver').value = '';
-    document.getElementById('sec-icon').className = 'material-symbols-outlined';
+    document.getElementById('sec-icon').className = 'material-symbols-outlined text-primary text-3xl';
     document.getElementById('sec-title').innerText = 'AI-Leger Shield: Active';
     document.getElementById('sec-status').innerText = 'Analyzing destination risk profile...';
 }
 
-/**
- * Section: Fraud Alerts & Modals
- */
 function openFraudModal(amount, receiver, reason) {
     document.getElementById('fraud-target').innerText = receiver;
-    document.getElementById('fraud-value').innerText = `$${parseFloat(amount).toLocaleString()}`;
+    document.getElementById('fraud-value').innerText = `$${parseFloat(amount).toLocaleString('en-US', {minimumFractionDigits: 2})}`;
     document.getElementById('fraud-vector').innerText = reason;
-    document.getElementById('fraud-modal').classList.remove('hidden');
+    document.getElementById('fraud-modal').classList.remove('hidden-view');
 }
 
 function closeFraudModal() {
-    document.getElementById('fraud-modal').classList.add('hidden');
+    document.getElementById('fraud-modal').classList.add('hidden-view');
     showView('dashboard');
 }
 
 /**
- * Utilities: Notifications
+ * Toast Notifications
  */
 function showToast(msg, type = 'safe') {
     const container = document.getElementById('toast-container');
@@ -294,14 +327,14 @@ function showToast(msg, type = 'safe') {
     
     toast.className = `toast-item ${type}`;
     toast.innerHTML = `
-        <span class="material-symbols-outlined">${icon}</span>
+        <span class="material-symbols-outlined text-2xl">${icon}</span>
         <p>${msg}</p>
     `;
     
     container.appendChild(toast);
     setTimeout(() => {
         toast.style.opacity = '0';
-        toast.style.transform = 'translateY(-20px)';
-        setTimeout(() => toast.remove(), 500);
-    }, 4000);
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => toast.remove(), 400);
+    }, 4500);
 }
