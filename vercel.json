@@ -55,5 +55,10 @@
       "src": "/",
       "dest": "/frontend/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/index.py": {
+      "runtime": "python3.12"
+    }
+  }
 }
