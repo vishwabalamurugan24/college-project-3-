@@ -1,7 +1,10 @@
-from backend.app import create_app
+from flask import Flask, render_template
 
-app = create_app()
+app = Flask(__name__)
 
-# This is the entry point for Vercel
-def handler(request):
-    return app(request)
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)
